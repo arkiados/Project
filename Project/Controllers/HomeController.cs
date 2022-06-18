@@ -15,38 +15,118 @@ namespace Project.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string sortOrder)
         {
-            var model = new Models.InventoryItem();
-            model.InventoryItems = _context.Inventory.ToList();
+            var model = from s in _context.Inventory
+                        select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    model = model.OrderByDescending(s => s.Name);
+                    break;
+                case "Manufacturer":
+                    model = model.OrderBy(s => s.Manufacturer);
+                    break;
+                case "manufacturer_desc":
+                    model = model.OrderByDescending(s => s.Manufacturer);
+                    break;
+                case "PurchaseDate":
+                    model = model.OrderBy(s => s.PurchaseDate);
+                    break;
+                case "purchase_date_desc":
+                    model = model.OrderByDescending(s => s.PurchaseDate);
+                    break;
+                case "ExpirationDate":
+                    model = model.OrderBy(s => s.ExpirationDate);
+                    break;
+                case "expiration_date_desc":
+                    model = model.OrderByDescending(s => s.ExpirationDate);
+                    break;
+                default:
+                    model = model.OrderBy(s => s.Name);
+                    break;
+            }
             return View(model);
         }
 
-        public IActionResult Edit()
+
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
             var model = new Models.InventoryItem();
-            model.InventoryItems = _context.Inventory.ToList();
+            model  = _context.Inventory.FirstOrDefault(t => t.ItemId == id);
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Edit(int id, InventoryItem inventoryItem)
+        {
+            if (id != inventoryItem.ItemId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(inventoryItem);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(inventoryItem);
+        }
+
+
+        [HttpGet]
         public IActionResult Create()
         {
             var model = new Models.InventoryItem();
-            model.InventoryItems = _context.Inventory.ToList();
             return View(model);
         }
 
-        public IActionResult Delete()
+        [HttpPost]
+        public IActionResult Create(InventoryItem inventoryItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(inventoryItem);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(inventoryItem);
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int id)
         {
             var model = new Models.InventoryItem();
-            model.InventoryItems = _context.Inventory.ToList();
+            model = _context.Inventory.FirstOrDefault(t => t.ItemId == id);
             return View(model);
         }
 
-        public IActionResult Details()
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id, InventoryItem inventoryItem)
+        {
+            if (_context.Inventory == null)
+            {
+                return Problem("Entity set 'InventoryContext.InventoryItems'  is null.");
+            }
+            if (inventoryItem != null)
+            {
+                _context.Inventory.Remove(inventoryItem);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpGet]
+        public IActionResult Details(int id)
         {
             var model = new Models.InventoryItem();
-            model.InventoryItems = _context.Inventory.ToList();
+            model = _context.Inventory.FirstOrDefault(t => t.ItemId == id);
             return View(model);
         }
 
