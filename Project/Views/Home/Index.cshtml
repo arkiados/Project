@@ -12,7 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -23,8 +23,29 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExpirationDate)
-            </th>
-            <th></th>
+            </th>*@
+
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>Name
+        </th>
+        <th>
+            @Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.ManufacturerSortParm })
+        </th>
+        <th>Manufacturer
+        </th>
+        <th>
+            @Html.ActionLink("PurchaseDate", "Index", new { sortOrder = ViewBag.PurchaseDateSortParm })
+        </th>
+        <th>Purchase Date
+        </th>
+        <th>
+            @Html.ActionLink("ExpirationDate", "Index", new { sortOrder = ViewBag.ExpirationDateSortParm })
+        </th>
+        <th>Expiration Date
+        </th>
+        <th></th>
         </tr>
     </thead>
     <tbody>

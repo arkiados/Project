@@ -18,6 +18,11 @@ namespace Project.Controllers
         [HttpGet]
         public IActionResult Index(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.ManufacturerSortParm = String.IsNullOrEmpty(sortOrder) ? "manufacturer_desc" : "";
+            ViewBag.PurchaseDateSortParm = sortOrder == "PurchaseDate" ? "purchase_date_desc" : "PurchaseDate";
+            ViewBag.ExpirationDateSortParm = sortOrder == "ExpirationDate" ? "expiration_date_desc" : "ExpirationDate";
+
             var model = from s in _context.Inventory
                         select s;
             switch (sortOrder)
