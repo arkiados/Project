@@ -38,7 +38,7 @@ namespace Project.Controllers
             var inventory = inventoryManager.Inventories
                 .Select(t => new InventoryModel(t.ItemId, t.Name, t.Manufacturer, t.PurchaseDate, t.ExpirationDate))
                 .ToArray();
-            var model = new InventoryModel { };
+            var model = new InventoryModel {  };
             switch (sortOrder)
             {
                 case "name_desc":
