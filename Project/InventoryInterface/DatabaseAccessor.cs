@@ -1,6 +1,6 @@
 ﻿
 
-namespace Project.Models
+namespace Project.InvInterface
 {
     public class DatabaseAccessor
     {

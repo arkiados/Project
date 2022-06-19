@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿
 
-namespace Project.Models
+namespace Project.InvInterface
 {
     public interface IInventoryRepository
     {
         InventoryModel[] Inventories { get; }
-        InventoryModel Inventory(int ItemId);
+        InventoryModel Inventory(int itemId);
     }
 
     // returns an array of items
@@ -16,31 +16,17 @@ namespace Project.Models
             get
             {
                 return DatabaseAccessor.Instance.Inventory
-                                               .Select(t => new InventoryModel
-                                               {
-                                                   ItemId = t.ItemId,
-                                                   Name = t.Name,
-                                                   Manufacturer = t.Manufacturer,
-                                                   PurchaseDate = t.PurchaseDate,
-                                                   ExpirationDate = t.ExpirationDate
-                                               })
+                                               .Select(t => new InventoryModel(t.ItemId, t.Name, t.Manufacturer, t.PurchaseDate, t.ExpirationDate))
                                                .ToArray();
             }
         }
 
         // returns one item - one data - which is the First()
-        public InventoryModel Inventory(int ItemId)
+        public InventoryModel Inventory(int itemId)
         {
             var Inventory = DatabaseAccessor.Instance.Inventory
-                                                   .Where(t => t.ItemId == ItemId)
-                                                   .Select(t => new InventoryModel
-                                                   {
-                                                       ItemId = t.ItemId,
-                                                       Name = t.Name,
-                                                       Manufacturer = t.Manufacturer,
-                                                       PurchaseDate = t.PurchaseDate,
-                                                       ExpirationDate = t.ExpirationDate
-                                                   })
+                                                   .Where(t => t.ItemId == itemId)
+                                                   .Select(t => new InventoryModel(t.ItemId, t.Name, t.Manufacturer, t.PurchaseDate, t.ExpirationDate))
                                                    .First();
             return Inventory;
         }

@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿
 
-
-namespace Project.Models
+namespace Project.InvInterface
 {
     public interface IInventoryManager
     {
@@ -17,9 +16,9 @@ namespace Project.Models
         public DateTime PurchaseDate { get; set; }
         public DateTime ExpirationDate { get; set; }
 
-        public InventoryModel(int id, string name, string manufacturer, DateTime purchaseDate, DateTime expirationDate)
+        public InventoryModel(int itemId, string name, string manufacturer, DateTime purchaseDate, DateTime expirationDate)
         {
-            ItemId = id;
+            ItemId = itemId;
             Name = name;
             Manufacturer = manufacturer;
             PurchaseDate = purchaseDate;
