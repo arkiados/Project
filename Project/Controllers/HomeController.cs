@@ -12,16 +12,17 @@ namespace Project.Controllers
 
         private readonly IInventoryManager inventoryManager;
 
-        public HomeController(ILogger<HomeController> logger, InventoryContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
-        public HomeController(ILogger<HomeController> logger, IInventoryManager inventoryManager)
+        public HomeController(ILogger<HomeController> logger, InventoryContext context, IInventoryManager inventoryManager)
         {
             this.inventoryManager = inventoryManager;
             _logger = logger;
+            _context = context;
         }
+        //public HomeController(ILogger<HomeController> logger, IInventoryManager inventoryManager)
+        //{
+        //    this.inventoryManager = inventoryManager;
+        //    _logger = logger;
+        //}
 
         [HttpGet]
         public IActionResult Index(string sortOrder)
@@ -31,10 +32,13 @@ namespace Project.Controllers
             ViewBag.PurchaseDateSortParm = sortOrder == "PurchaseDate" ? "purchase_date_desc" : "PurchaseDate";
             ViewBag.ExpirationDateSortParm = sortOrder == "ExpirationDate" ? "expiration_date_desc" : "ExpirationDate";
 
-            //var model = from s in _context.Inventory
+            //var model = from s in Project.InvInterface
             //            select s;
 
-            var inventories = 
+            var inventory = inventoryManager.Inventories
+                .Select(t => new InventoryModel(t.ItemId, t.Name, t.Manufacturer, t.PurchaseDate, t.ExpirationDate))
+                .ToArray();
+            var model = new InventoryModel.
             switch (sortOrder)
             {
                 case "name_desc":
