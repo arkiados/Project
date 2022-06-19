@@ -8,12 +8,18 @@ namespace Project.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Project.InventoryContext _context;
+
         private readonly IInventoryManager inventoryManager;
 
         public HomeController(ILogger<HomeController> logger, InventoryContext context)
         {
             _logger = logger;
             _context = context;
+        }
+        public HomeController(ILogger<HomeController> logger, IInventoryManager inventoryManager)
+        {
+            this.inventoryManager = inventoryManager;
+            _logger = logger;
         }
 
         [HttpGet]

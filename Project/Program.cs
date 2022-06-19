@@ -1,12 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Project;
 using Project.Data;
+using Project.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<InventoryContext>(x => x.UseSqlServer("Server=CS302\\SQLEXPRESS,53437;Database=InventoryDb;User Id=sqlusr;Password=sqluser123!"));
+builder.Services.AddSingleton<IInventoryManager, InventoryManager>();
+builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
