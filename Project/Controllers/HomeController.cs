@@ -8,6 +8,7 @@ namespace Project.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Project.InventoryContext _context;
+        private readonly IInventoryManager inventoryManager;
 
         public HomeController(ILogger<HomeController> logger, InventoryContext context)
         {
@@ -23,8 +24,10 @@ namespace Project.Controllers
             ViewBag.PurchaseDateSortParm = sortOrder == "PurchaseDate" ? "purchase_date_desc" : "PurchaseDate";
             ViewBag.ExpirationDateSortParm = sortOrder == "ExpirationDate" ? "expiration_date_desc" : "ExpirationDate";
 
-            var model = from s in _context.Inventory
-                        select s;
+            //var model = from s in _context.Inventory
+            //            select s;
+
+            var inventories = 
             switch (sortOrder)
             {
                 case "name_desc":

@@ -5,6 +5,12 @@ namespace Project
 {
     public class InventoryContext : DbContext
     {
+
+        public InventoryContext()
+        {
+
+        }
+
         public InventoryContext(DbContextOptions<InventoryContext> options) : base(options)
         {
 
